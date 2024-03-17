@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 
 @RestController
 public class MainController {
-    private Logger log = LoggerFactory.getLogger(MainController.class);
+    private final Logger log = LoggerFactory.getLogger(MainController.class);
     ObjectMapper mapper = new ObjectMapper();
 
     @PostMapping(
@@ -59,7 +59,7 @@ public class MainController {
         }
     }
     private BigDecimal generateBalance(BigDecimal maxLimit){
-        int minValue = 1;
+        int minValue = maxLimit.intValue() / 10;
         int maxValue = maxLimit.intValue();
         int randomValue = minValue + (int) (Math.random() * (maxValue - minValue + 1));
         return new BigDecimal(randomValue);
