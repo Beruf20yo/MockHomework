@@ -22,24 +22,24 @@ public class MainController {
     @PostMapping(
             value = "/info/postBalances",
             produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE )
-    public Object postBalances(@RequestBody RequestDTO requestDTO){
-        try{
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Object postBalances(@RequestBody RequestDTO requestDTO) {
+        try {
             String clientId = requestDTO.getClientId();
             char firstDigit = clientId.charAt(0);
-            String currency = "";
+            String currency;
             BigDecimal maxLimit;
-            switch (firstDigit){
-                case '8'->{
-                    maxLimit =new BigDecimal(2000);
+            switch (firstDigit) {
+                case '8' -> {
+                    maxLimit = new BigDecimal(2000);
                     currency = "US";
                 }
-                case '9'->{
-                    maxLimit =new BigDecimal(1000);
+                case '9' -> {
+                    maxLimit = new BigDecimal(1000);
                     currency = "EU";
                 }
                 default -> {
-                    maxLimit =new BigDecimal(10000);
+                    maxLimit = new BigDecimal(10000);
                     currency = "RUB";
                 }
             }
@@ -58,13 +58,12 @@ public class MainController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    private BigDecimal generateBalance(BigDecimal maxLimit){
+
+    private BigDecimal generateBalance(BigDecimal maxLimit) {
         int minValue = maxLimit.intValue() / 10;
         int maxValue = maxLimit.intValue();
         int randomValue = minValue + (int) (Math.random() * (maxValue - minValue + 1));
         return new BigDecimal(randomValue);
-
-
     }
 
 }
